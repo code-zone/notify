@@ -8,13 +8,13 @@
         </div>
         <form action="{{route('login')}}" method="POST">
             {{csrf_field()}}
-            <div class="form-group {{$errors->has('username') ? 'has-error' : ''}}">
+            <div class="form-group {{$errors->has('email') ? 'has-error' : ''}}">
                 <div class="input-group ">
                     <span class="input-group-addon" id="basic-addon1">
-                        <i class="fa fa-user" aria-hidden="true"></i></span>
-                        <input type="text" value="{{old('username')}}" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="username">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                        <input type="text" value="{{old('email')}}" class="form-control" placeholder="Email Address" aria-describedby="basic-addon1" name="email">
                 </div>
-                {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
+                {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
             </div>
             <div class="form-group {{$errors->has('password') ? 'has-error' : ''}}">
                 <div class="input-group">
@@ -28,6 +28,14 @@
                 <button type="submit" class="btn btn-success btn-submit"> 
                     Login
                 </button>
+            </div>
+            <div class="form-line">
+                 <div class="title">OR</div>
+            </div>
+            <div class="text-center">
+                <a href="{{ route('register') }}" class="btn btn-primary btn-submit"> 
+                    Create Account
+                </a>
             </div>
         </form>
       </div>

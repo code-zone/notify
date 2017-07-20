@@ -13,18 +13,12 @@ class CreateSalesTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id', false, true)->nullable();
+            $table->unsignedInteger('student_id');
             $table->double('amount');
             $table->string('order_number');
             $table->timestamps();
-        });
-        Schema::create('sales', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('meal_id')->unsigned();
-            $table->integer('order_id')->unsigned();
-            $table->timestamps();
-            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
 
@@ -33,7 +27,7 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
         Schema::dropIfExists('sales');
+        Schema::dropIfExists('orders');
     }
 }

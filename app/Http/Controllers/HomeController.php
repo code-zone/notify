@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $orders = Order::when(\Bouncer::allows('order-meals'), function ($query) {
+            return $query->where('student_id', \Auth::user()->student->id);
+        })->where('status', 'pending')->count();
+         $sales = Order::when(\Bouncer::allows('order-meals'), function ($query) {
+            return $query->where('student_id', \Auth::user()->student->id);
+        })->where('status', 'approved')->sum('amount');
+        return view('home', compact('orders', 'sales'));
     }
 }

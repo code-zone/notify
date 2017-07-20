@@ -1,76 +1,95 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+<div class="app-block">
+    <div class="app-right-section">
+        <div class="app-brand"><strong>{{config('app.name')}}</strong></div>
+            <div class="app-info">
+                <ul class="list">
+                    <li>
+                        <div class="icon">
+                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                         </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="title">Create Account</div>
+                    </li>
+                    <li>
+                        <div class="icon">
+                            <i class="fa fa-cubes" aria-hidden="true"></i>
                         </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="title">Get Verified</div>
+                    </li>
+                    <li>
+                        <div class="icon">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        <div class="title">Start Ordering</div>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="app-form">
+            <div class="form-suggestion">
+                Create an account for free.
+            </div>
+            <form action="{{ route('register') }}" method="POST">
+                {{csrf_field()}}
+                <div class="form-group {{error($errors, 'name')}}">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" value="{{old('name')}}" name="name" class="form-control" placeholder="Fullname" aria-describedby="basic-addon1">
+                    </div>
+                    {!!error_msg($errors, 'name')!!}
+                </div>
+                <div class="form-group {{error($errors, 'reg_no')}}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" value="{{old('reg_no')}}" class="form-control" placeholder="Registration Number" aria-describedby="basic-addon2" name="reg_no">
+                    </div>
+                    {!!error_msg($errors, 'reg_no')!!}
+                </div>
+                <div class="form-group {{error($errors, 'email')}}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" value="{{old('email')}}" class="form-control" placeholder="Email Address" aria-describedby="basic-addon2" name="email">
+                    </div>
+                    {!!error_msg($errors, 'email')!!}
+                </div>
+                <div class="form-group {{error($errors, 'phone_number')}}">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" value="{{old('phone_number')}}" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon2" name="phone_number">
+                    </div>
+                    {!!error_msg($errors, 'phone_number')!!}
+                </div>
+                <div class="form-group {{error($errors, 'password')}}">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="basic-addon3">
+                    </div>
+                {!!error_msg($errors, 'password')!!}
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </span>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" aria-describedby="basic-addon4">
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" class="btn btn-success btn-submit" value="Register">
+            </div>
+        </form>
     </div>
 </div>
 @endsection

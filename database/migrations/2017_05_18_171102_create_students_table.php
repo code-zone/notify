@@ -11,16 +11,17 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sudents', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('phone_number');
             $table->string('course');
             $table->string('reg_no');
-            $table->string('year');
-            $table->string('semester');
             $table->string('email');
-            $table->string('phone');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sudents');
+        Schema::dropIfExists('students');
     }
 }
