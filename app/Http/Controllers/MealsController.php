@@ -59,14 +59,14 @@ class MealsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['name' => 'required|string|min:3', 'price' => 'required|numeric|min:0', 'image' => ['required', Rule::dimensions()->maxWidth(1000)->maxHeight(500)],
-            'category' => 'required', 'details' => 'required|string|max:100',
+            'category' => 'required', 'details' => 'required|string|max:255',
             ]);
         $meal = $this->meals->create($request->all());
         if ($request->hasFile('image')) {
             $image = $request->image;
             $name = md5($image->getClientOriginalName().time()).'.'.$image->extension();
             $image->move(public_path('images'), $name);
-            $meal->update(['image'=> $name]);
+            $meal->update(['image' => $name]);
         }
 
         return redirect()->route('meals.index');
@@ -93,7 +93,7 @@ class MealsController extends Controller
      */
     public function edit(Meal $meal)
     {
-         return view('meals.edit', compact('meal'));
+        return view('meals.edit', compact('meal'));
     }
 
     /**
@@ -114,7 +114,7 @@ class MealsController extends Controller
             $image = $request->image;
             $name = md5($image->getClientOriginalName().time()).'.'.$image->extension();
             $image->move(public_path('images'), $name);
-            $meal->update(['image'=> $name]);
+            $meal->update(['image' => $name]);
         }
 
         return redirect()->route('meals.index');
